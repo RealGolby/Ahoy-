@@ -517,5 +517,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Capsule
       objectReference: {fileID: 0}
+    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: dashForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: movementSpeed
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}

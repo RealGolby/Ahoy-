@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float dashForce;
 
+    [SerializeField] float dashCooldown;
+
     [SerializeField] PlayerState playerState;
     [SerializeField] PlayerFace playerFace;
 
@@ -26,10 +28,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool isGrounded;
 
     [SerializeField] LayerMask groundLayer;
-
-    public int JumpsRemaining = 2;
-
     float moveX;
+
+    bool canJump;
+    bool canDash = true;
 
     private void Start()
     {
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
         jump();
         move();
+        dash();
     }
 
     void jump()
@@ -58,12 +61,12 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 rb.AddForce(new Vector2(0, jumpForce));
-                JumpsRemaining--;
             }
-            else if (JumpsRemaining > 0 && !isGrounded)
+            else if (canJump && !isGrounded)
             {
+                canJump = false;
+                rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(0, jumpForce * 1.5f));
-                JumpsRemaining--;
             }
         }
 
@@ -72,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
     void move()
     {
         moveX = Input.GetAxisRaw("Horizontal");
-
         if (moveX != 0)
         {
             playerState = PlayerState.Moving;
@@ -98,31 +100,37 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            playerState = PlayerState.Idle;
+            Invoke("setPlayerIdle",.5f);
         }
+    }
+
+    void setPlayerIdle()
+    {
+        playerState = PlayerState.Idle;
     }
 
     void dash()
     {
         if (playerState != PlayerState.Moving) return;
-        if (playerFace == PlayerFace.Right && moveX > 0 && Input.GetKeyDown(KeyCode.D))
+        if (playerFace == PlayerFace.Right && Input.GetKeyDown(KeyCode.LeftShift))
         {
-
+            Debug.Log("Dashing");
             playerState = PlayerState.Dashing;
             rb.AddForce(new Vector2(dashForce * 1, 0));
-            StartCoroutine("dashCooldown");
+            StartCoroutine("getDashCooldown");
         }
-        else if (playerFace == PlayerFace.Left && moveX < 0 && Input.GetKeyDown(KeyCode.A))
+        else if (playerFace == PlayerFace.Left && Input.GetKeyDown(KeyCode.LeftShift))
         {
+            Debug.Log("Dashing");
             playerState = PlayerState.Dashing;
             rb.AddForce(new Vector2(dashForce * -1, 0));
-            StartCoroutine("dashCooldown");
+            StartCoroutine("getDashCooldown");
         }
     }
 
-    IEnumerator dashCooldown()
+    IEnumerator getDashCooldown()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(dashCooldown);
         playerState = PlayerState.Idle;
     }
 
@@ -130,7 +138,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            JumpsRemaining = 2;
+            Debug.Log("dd");
+            if(!canJump)
+            canJump = true;
         }
     }
 }

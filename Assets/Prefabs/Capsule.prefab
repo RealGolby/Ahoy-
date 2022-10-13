@@ -100,13 +100,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 6
-  jumpForce: 400
+  jumpForce: 450
+  dashForce: 4
+  dashCooldown: 2
   playerState: 0
+  playerFace: 0
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  JumpsRemaining: 2
 --- !u!50 &4492408654224065811
 Rigidbody2D:
   serializedVersion: 4
@@ -127,7 +129,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &4492408654224065810
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
