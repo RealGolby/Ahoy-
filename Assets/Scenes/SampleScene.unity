@@ -513,21 +513,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4492408654224065811, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: m_Mass
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4492408654224065814, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: m_Name
       value: Capsule
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: jumpForce
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: movementSpeed
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
