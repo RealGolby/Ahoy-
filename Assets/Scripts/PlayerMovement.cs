@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-public enum PlayerState
-{
-    Idle, Moving, Running, Dashing, Dead
-}
-
 public enum PlayerFace
 {
     Left, Right, Up, Down
@@ -17,130 +12,128 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float dashForce;
 
-    [SerializeField] float dashCooldown;
+    public int JumpsRemaining;
 
-    [SerializeField] PlayerState playerState;
+    [SerializeField] float dashCooldown;
+    [SerializeField] float dashDuration;
+    [SerializeField] float jumpCooldown;
+
+    [SerializeField] float groundDrag;
+
     [SerializeField] PlayerFace playerFace;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
+    TrailRenderer tr;
 
     [SerializeField] bool isGrounded;
 
     [SerializeField] LayerMask groundLayer;
     float moveX;
 
-    bool canJump;
+    bool canJump = true;
     bool canDash = true;
+    bool dashing = false;
+
+    Vector3 targetRotation;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        tr = GetComponent<TrailRenderer>();
     }
     private void Update()
     {
-        if (playerState == PlayerState.Dead) return;
+        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation,.075f);
 
-        jump();
+        getInput();
+        speedControl();
+
+        if (isGrounded) rb.drag = groundDrag;
+        else rb.drag = 0;
+    }
+
+    private void FixedUpdate()
+    {
+        isGrounded = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 1.5f), .2f, groundLayer);
         move();
-        dash();
+    }
+
+    void getInput()
+    {
+        moveX = Input.GetAxisRaw("Horizontal");
+
+        if (isGrounded) JumpsRemaining = 1;
+
+        if (Input.GetKeyDown(KeyCode.Space)) jump();
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) StartCoroutine(dash()); ;
     }
 
     void jump()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.1f, groundLayer);
-        if (hit.collider == null) isGrounded = false;
-        else
+        if (isGrounded && canJump)
         {
-            isGrounded = true;
+            canJump = false;
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            JumpsRemaining--;
+            Invoke("delayJump", jumpCooldown);
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        else if (!isGrounded && canJump && JumpsRemaining > 0)
         {
-            if (isGrounded)
-            {
-                rb.AddForce(new Vector2(0, jumpForce));
-            }
-            else if (canJump && !isGrounded)
-            {
-                canJump = false;
-                rb.velocity = Vector2.zero;
-                rb.AddForce(new Vector2(0, jumpForce * 1.5f));
-            }
+            canJump = false;
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            JumpsRemaining--;
+            Invoke("delayJump", jumpCooldown);
         }
-
-
     }
+
+    void delayJump()
+    {
+        canJump = true;
+    }
+
     void move()
     {
-        moveX = Input.GetAxisRaw("Horizontal");
-        if (moveX != 0)
-        {
-            playerState = PlayerState.Moving;
-            if (isGrounded)
-            {
-                transform.position += new Vector3(moveX * movementSpeed * Time.deltaTime, 0, 0);
-            }
-            else
-            {
-                transform.position += new Vector3(moveX / 1.5f * movementSpeed * Time.deltaTime, 0, 0);
-            }
+        if (moveX == 0) return;
 
-            if (moveX > 0)
-            {
-                sr.flipX = false;
-                playerFace = PlayerFace.Right;
-            }
-            else if (moveX < 0)
-            {
-                sr.flipX = true;
-                playerFace = PlayerFace.Left;
-            }
-        }
-        else
+        rb.AddForce(new Vector2(moveX * movementSpeed * 10, 0), ForceMode2D.Force);
+
+        if (moveX > 0)
         {
-            Invoke("setPlayerIdle",.5f);
+            targetRotation = new Vector3(0,180,0);
+            playerFace = PlayerFace.Right;
+        }
+        else if (moveX < 0)
+        {
+            targetRotation = new Vector3(0, 0, 0);
+            playerFace = PlayerFace.Left;
         }
     }
 
-    void setPlayerIdle()
+    private void speedControl()
     {
-        playerState = PlayerState.Idle;
-    }
-
-    void dash()
-    {
-        if (playerState != PlayerState.Moving) return;
-        if (playerFace == PlayerFace.Right && Input.GetKeyDown(KeyCode.LeftShift))
+        if (dashing) return;
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f);
+        if (flatVel.magnitude > movementSpeed)
         {
-            Debug.Log("Dashing");
-            playerState = PlayerState.Dashing;
-            rb.AddForce(new Vector2(dashForce * 1, 0));
-            StartCoroutine("getDashCooldown");
-        }
-        else if (playerFace == PlayerFace.Left && Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Debug.Log("Dashing");
-            playerState = PlayerState.Dashing;
-            rb.AddForce(new Vector2(dashForce * -1, 0));
-            StartCoroutine("getDashCooldown");
+            Vector3 limitedVel = flatVel.normalized * movementSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y);
         }
     }
 
-    IEnumerator getDashCooldown()
+    IEnumerator dash()
     {
-        yield return new WaitForSeconds(dashCooldown);
-        playerState = PlayerState.Idle;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            Debug.Log("dd");
-            if(!canJump)
-            canJump = true;
-        }
+        canDash = false;
+        dashing = true;
+        rb.AddForce(new Vector2(dashForce,0),ForceMode2D.Force);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashDuration);
+        dashing = false;
+        tr.emitting = false;
+        yield return new WaitForSeconds(dashCooldown - dashDuration);
+        canDash = true;
     }
 }
