@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventoryManager : MonoBehaviour
 {
-    List<Item> items;
+    [SerializeField] List<Item> items;
+
+    [SerializeField] Item Equppied;
+    [SerializeField] Item lastEquppied;
+
+    [SerializeField] List<Image> HotbarItemsImages;
 
     private void Update()
     {
@@ -13,6 +19,7 @@ public class PlayerInventoryManager : MonoBehaviour
 
     void switchItem()
     {
+        lastEquppied = Equppied;
 
     }
 
