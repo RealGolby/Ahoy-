@@ -18,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashDuration;
     [SerializeField] float jumpCooldown;
 
+    [SerializeField] int dashStaminaCost;
+    [SerializeField] int doubleJumpStaminaCost;
+
     [SerializeField] float groundDrag;
 
     [SerializeField] PlayerFace playerFace;
@@ -40,11 +43,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] GameObject PlayerHead;
 
+    Player player;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         tr = GetComponent<TrailRenderer>();
+        player = GetComponent<Player>();
     }
     private void Update()
     {
@@ -54,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         speedControl();
         rotateHead();
         rotateBody();
+        recoverStamina();
 
         if (isGrounded) rb.drag = groundDrag;
         else rb.drag = 0;
@@ -64,6 +71,16 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 1.5f), .05f, groundLayer);
         move();
     }
+    [SerializeField] float target = 3;
+    [SerializeField] float t = 3;
+    void recoverStamina()
+    {
+        if(t > target)
+        {
+            t -= Time.deltaTime;
+            Debug.Log(":)");
+        }
+    }
 
     void getInput()
     {
@@ -73,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space)) jump();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) StartCoroutine(dash()); ;
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && player.Stamina >= dashStaminaCost) StartCoroutine(dash()); ;
     }
 
     void jump()
@@ -85,8 +102,9 @@ public class PlayerMovement : MonoBehaviour
             JumpsRemaining--;
             Invoke("delayJump", jumpCooldown);
         }
-        else if (!isGrounded && canJump && JumpsRemaining > 0)
+        else if (!isGrounded && canJump && JumpsRemaining > 0 && player.Stamina >= 5)
         {
+            player.ChangeStamina(-doubleJumpStaminaCost);
             canJump = false;
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
@@ -163,6 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator dash()
     {
+        player.ChangeStamina(-dashStaminaCost);
         canDash = false;
         dashing = true;
         rb.AddForce(new Vector2(dashForce, 0), ForceMode2D.Force);

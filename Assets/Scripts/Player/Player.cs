@@ -13,13 +13,13 @@ public class Player : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
-        Health = amount;
-        HealthText.text = amount.ToString();
+        Health += amount;
+        HealthText.text = Health.ToString();
     }
 
     public void ChangeStamina(int amount)
     {
-        Stamina = amount;
-        StaminaText.text = amount.ToString();
+        Stamina += amount;
+        StaminaText.text = Stamina.ToString();
     }
 }

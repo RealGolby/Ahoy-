@@ -3138,18 +3138,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: Health
-      value: 100
+    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: doubleJumpStaminaCost
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: Stamina
-      value: 20
+      value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: HotbarItemsImages.Array.size
-      value: 5
-      objectReference: {fileID: 0}
+    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: HealthText
+      value: 
+      objectReference: {fileID: 272474996}
+    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: StaminaText
+      value: 
+      objectReference: {fileID: 1742469604}
     - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: HotbarItemsImages.Array.data[0]
       value: 

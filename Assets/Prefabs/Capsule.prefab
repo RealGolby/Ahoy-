@@ -251,8 +251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd40de23e6afccb41b3b26a72e6ab1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 0
-  Stamina: 0
+  Health: 100
+  Stamina: 20
+  HealthText: {fileID: 0}
+  StaminaText: {fileID: 0}
 --- !u!114 &4492408654224065815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +274,7 @@ MonoBehaviour:
   dashCooldown: 2
   dashDuration: 0.3
   jumpCooldown: 0.25
+  dashStaminaCost: 10
   groundDrag: 0.4
   playerFace: 0
   isGrounded: 1
@@ -294,7 +297,12 @@ MonoBehaviour:
   items: []
   Equppied: {fileID: 0}
   lastEquppied: {fileID: 0}
-  HotbarItemsImages: []
+  HotbarItemsImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &4492408654224065811
 Rigidbody2D:
   serializedVersion: 4
