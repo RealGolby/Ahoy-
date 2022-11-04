@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     bool dashing = false;
 
     Vector3 targetRotation;
+    Vector2 mouseOnScreen;
+
+    [SerializeField] GameObject PlayerHead;
 
     private void Start()
     {
@@ -45,10 +48,12 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation,.075f);
+        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation, 4/*.075f*/ * Time.deltaTime);
 
         getInput();
         speedControl();
+        rotateHead();
+        rotateBody();
 
         if (isGrounded) rb.drag = groundDrag;
         else rb.drag = 0;
@@ -103,14 +108,46 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveX > 0)
         {
-            targetRotation = new Vector3(0,180,0);
+            //targetRotation = new Vector3(0, 180, 0);
             playerFace = PlayerFace.Right;
         }
         else if (moveX < 0)
         {
-            targetRotation = new Vector3(0, 0, 0);
+            //targetRotation = new Vector3(0, 0, 0);
             playerFace = PlayerFace.Left;
         }
+    }
+
+    void rotateHead()
+    {
+
+        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+        mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        Debug.Log(angle);
+        if (angle > 90) angle = 180 - angle;
+        else if (angle < -90) angle = 180 - angle;
+        //Debug.Log(angle);
+
+        PlayerHead.transform.localRotation = Quaternion.Euler(new Vector3(transform.rotation.x,transform.rotation.y,angle/* Mathf.Clamp(angle,-90,90)*/));
+    }
+
+    void rotateBody()
+    {
+        if(mouseOnScreen.x > .5f)
+        {
+            targetRotation = new Vector3(0, 180, 0);
+        }
+        else
+        {
+            targetRotation = new Vector3(0, 0, 0);
+        }
+    }
+
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    {
+        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 
     private void speedControl()
@@ -128,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canDash = false;
         dashing = true;
-        rb.AddForce(new Vector2(dashForce,0),ForceMode2D.Force);
+        rb.AddForce(new Vector2(dashForce, 0), ForceMode2D.Force);
         tr.emitting = true;
         yield return new WaitForSeconds(dashDuration);
         dashing = false;
