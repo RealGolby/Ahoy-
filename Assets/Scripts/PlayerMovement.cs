@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation, 4/*.075f*/ * Time.deltaTime);
+        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation, 5/*.075f*/ * Time.deltaTime);
 
         getInput();
         speedControl();
