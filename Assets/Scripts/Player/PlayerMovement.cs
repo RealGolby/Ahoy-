@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-public enum PlayerFace
-{
-    Left, Right, Up, Down
-}
-
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
@@ -22,8 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] int doubleJumpStaminaCost;
 
     [SerializeField] float groundDrag;
-
-    [SerializeField] PlayerFace playerFace;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -42,8 +35,11 @@ public class PlayerMovement : MonoBehaviour
     Vector2 mouseOnScreen;
 
     [SerializeField] GameObject PlayerHead;
-
     Player player;
+
+    [SerializeField] float staminaRecoveryTimer;
+    [SerializeField] float time;
+    bool canRecoverStamina;
 
     private void Start()
     {
@@ -54,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation, 5/*.075f*/ * Time.deltaTime);
+        transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, targetRotation, 8/*.075f*/ * Time.deltaTime);
 
         getInput();
         speedControl();
@@ -71,15 +67,16 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 1.5f), .05f, groundLayer);
         move();
     }
-    [SerializeField] float target = 3;
-    [SerializeField] float t = 3;
+
     void recoverStamina()
     {
-        if(t > target)
+        while(time > 0)
         {
-            t -= Time.deltaTime;
-            Debug.Log(":)");
+            time -= Time.deltaTime;
+            if (time <= 0) canRecoverStamina = true;
         }
+
+
     }
 
     void getInput()
@@ -104,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!isGrounded && canJump && JumpsRemaining > 0 && player.Stamina >= 5)
         {
+            time = staminaRecoveryTimer;
             player.ChangeStamina(-doubleJumpStaminaCost);
             canJump = false;
             rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -123,17 +121,6 @@ public class PlayerMovement : MonoBehaviour
         if (moveX == 0) return;
 
         rb.AddForce(new Vector2(moveX * movementSpeed * 10, 0), ForceMode2D.Force);
-
-        if (moveX > 0)
-        {
-            //targetRotation = new Vector3(0, 180, 0);
-            playerFace = PlayerFace.Right;
-        }
-        else if (moveX < 0)
-        {
-            //targetRotation = new Vector3(0, 0, 0);
-            playerFace = PlayerFace.Left;
-        }
     }
 
     void rotateHead()
@@ -143,7 +130,6 @@ public class PlayerMovement : MonoBehaviour
 
         mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-        Debug.Log(angle);
         if (angle > 90) angle = 180 - angle;
         else if (angle < -90) angle = 180 - angle;
         //Debug.Log(angle);
@@ -181,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator dash()
     {
+        time = staminaRecoveryTimer;
         player.ChangeStamina(-dashStaminaCost);
         canDash = false;
         dashing = true;

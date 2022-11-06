@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     public int Health;
     public int Stamina;
 
+    public int MaxHealth;
+    public int MaxStamina;
+
     [SerializeField] TMP_Text HealthText;
     [SerializeField] TMP_Text StaminaText;
 
