@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 142870100}
+  TargetZoom: 5
 --- !u!1 &536732477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3190,5 +3191,13 @@ PrefabInstance:
       propertyPath: HotbarItemsImages.Array.data[4]
       value: 
       objectReference: {fileID: 1064399719}
+    - target: {fileID: 8434569839296325314, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: Zoom
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434569839296325314, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 519420033}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}

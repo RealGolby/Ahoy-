@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 6767227785784634530}
   - component: {fileID: 4492408654224065815}
   - component: {fileID: 6981072702508036761}
+  - component: {fileID: 8434569839296325314}
   - component: {fileID: 4492408654224065811}
   - component: {fileID: 142870106}
   - component: {fileID: 142870107}
@@ -253,6 +254,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Stamina: 20
+  MaxHealth: 0
+  MaxStamina: 0
   HealthText: {fileID: 0}
   StaminaText: {fileID: 0}
 --- !u!114 &4492408654224065815
@@ -275,13 +278,17 @@ MonoBehaviour:
   dashDuration: 0.3
   jumpCooldown: 0.25
   dashStaminaCost: 10
+  doubleJumpStaminaCost: 0
   groundDrag: 0.4
-  playerFace: 0
   isGrounded: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   PlayerHead: {fileID: 1264236074}
+  staminaRecoveryTimer: 0
+  time: 0
+  canRecoverStamina: 0
+  recoveringStamina: 0
 --- !u!114 &6981072702508036761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +310,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &8434569839296325314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4492408654224065814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7543f9926f98dba4d95e601c996d1f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraController: {fileID: 0}
 --- !u!50 &4492408654224065811
 Rigidbody2D:
   serializedVersion: 4

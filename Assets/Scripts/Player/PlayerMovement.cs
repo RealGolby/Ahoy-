@@ -35,12 +35,13 @@ public class PlayerMovement : MonoBehaviour
     Vector2 mouseOnScreen;
 
     [SerializeField] GameObject PlayerHead;
+    PlayerShootingManager shootingManager;
     Player player;
 
     [SerializeField] float staminaRecoveryTimer;
-    [SerializeField] float time;
-    [SerializeField] bool canRecoverStamina;
-    [SerializeField] bool recoveringStamina;
+    float time;
+    bool canRecoverStamina;
+    bool recoveringStamina;
 
     IEnumerator recoverStamianCoroutine;
 
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         tr = GetComponent<TrailRenderer>();
         player = GetComponent<Player>();
+        shootingManager = GetComponent<PlayerShootingManager>();
 
         recoverStamianCoroutine = regenerateStamina();
     }
@@ -147,22 +149,28 @@ public class PlayerMovement : MonoBehaviour
 
     void rotateHead()
     {
-
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-
         mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-        if (angle > 90) angle = 180 - angle;
-        else if (angle < -90) angle = 180 - angle;
-        //Debug.Log(angle);
+        if (shootingManager.Zooming)
+        {
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+            float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+            if (angle > 90) angle = 180 - angle;
+            else if (angle < -90) angle = 180 - angle;
+            //Debug.Log(angle);
 
-        PlayerHead.transform.localRotation = Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, angle/* Mathf.Clamp(angle,-90,90)*/));
+            PlayerHead.transform.localRotation = Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, angle/* Mathf.Clamp(angle,-90,90)*/));
+        }
+        else
+        {
+            PlayerHead.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        }
     }
-
+    [SerializeField] Vector3 test;
     void rotateBody()
     {
         if (mouseOnScreen.x > .5f)
         {
+            test = Camera.main.WorldToViewportPoint(player.transform.position);
             targetRotation = new Vector3(0, 180, 0);
         }
         else
