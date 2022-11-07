@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerInventoryManager : MonoBehaviour
 {
-    [SerializeField] List<Item> items;
+    [SerializeField] List<Item> items = new(4);
 
     [SerializeField] Item Equppied;
     [SerializeField] Item lastEquppied;

@@ -14,6 +14,12 @@ public class Player : MonoBehaviour
     [SerializeField] TMP_Text HealthText;
     [SerializeField] TMP_Text StaminaText;
 
+    private void Start()
+    {
+        HealthText.text = Health.ToString();
+        StaminaText.text = Stamina.ToString();
+    }
+
     public void ChangeHealth(int amount)
     {
         Health += amount;

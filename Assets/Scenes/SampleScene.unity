@@ -3167,6 +3167,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1742469604}
     - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: items.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: HotbarItemsImages.Array.data[0]
       value: 
       objectReference: {fileID: 1330053355}
