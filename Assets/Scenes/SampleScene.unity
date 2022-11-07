@@ -2139,7 +2139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: 90
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3139,6 +3139,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: staminaRecoveryTimer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: doubleJumpStaminaCost
       value: 5
       objectReference: {fileID: 0}
@@ -3147,9 +3151,17 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: HealthText
       value: 
       objectReference: {fileID: 272474996}
+    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
+      propertyPath: MaxStamina
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: StaminaText
       value: 

@@ -39,7 +39,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float staminaRecoveryTimer;
     [SerializeField] float time;
-    bool canRecoverStamina;
+    [SerializeField] bool canRecoverStamina;
+    [SerializeField] bool recoveringStamina;
+
+    IEnumerator recoverStamianCoroutine;
 
     private void Start()
     {
@@ -47,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         tr = GetComponent<TrailRenderer>();
         player = GetComponent<Player>();
+
+        recoverStamianCoroutine = regenerateStamina();
     }
     private void Update()
     {
@@ -70,13 +75,26 @@ public class PlayerMovement : MonoBehaviour
 
     void recoverStamina()
     {
-        while(time > 0)
+        if (time > 0)
         {
+            Debug.Log("Delaying stamina recovery");
             time -= Time.deltaTime;
-            if (time <= 0) canRecoverStamina = true;
+            if (time <= 0 && !recoveringStamina) canRecoverStamina = true;
         }
 
+        if (canRecoverStamina && !recoveringStamina && player.Stamina < player.MaxStamina) StartCoroutine(regenerateStamina());
+    }
 
+    IEnumerator regenerateStamina()
+    {
+        Debug.Log("Coroutine regeneretate stmaina");
+        recoveringStamina = true;
+        if (player.Stamina < player.MaxStamina)
+        {
+            yield return new WaitForSeconds(.5f);
+            player.ChangeStamina(5);
+        }
+        recoveringStamina = false;
     }
 
     void getInput()
@@ -102,6 +120,10 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded && canJump && JumpsRemaining > 0 && player.Stamina >= 5)
         {
             time = staminaRecoveryTimer;
+            if (recoverStamianCoroutine != null) StopCoroutine(recoverStamianCoroutine);
+            recoveringStamina = false;
+            canRecoverStamina = false;
+
             player.ChangeStamina(-doubleJumpStaminaCost);
             canJump = false;
             rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -134,12 +156,12 @@ public class PlayerMovement : MonoBehaviour
         else if (angle < -90) angle = 180 - angle;
         //Debug.Log(angle);
 
-        PlayerHead.transform.localRotation = Quaternion.Euler(new Vector3(transform.rotation.x,transform.rotation.y,angle/* Mathf.Clamp(angle,-90,90)*/));
+        PlayerHead.transform.localRotation = Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, angle/* Mathf.Clamp(angle,-90,90)*/));
     }
 
     void rotateBody()
     {
-        if(mouseOnScreen.x > .5f)
+        if (mouseOnScreen.x > .5f)
         {
             targetRotation = new Vector3(0, 180, 0);
         }
@@ -168,6 +190,10 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator dash()
     {
         time = staminaRecoveryTimer;
+        if (recoverStamianCoroutine != null) StopCoroutine(recoverStamianCoroutine);
+        recoveringStamina = false;
+        canRecoverStamina = false;
+
         player.ChangeStamina(-dashStaminaCost);
         canDash = false;
         dashing = true;
