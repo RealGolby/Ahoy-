@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour
 
     Camera camera;
 
+    Vector3 mousePosition;
+
     private void Start()
     {
         camera = GetComponent<Camera>();
@@ -20,10 +22,13 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, TargetZoom, 5 * Time.deltaTime);
+        Debug.Log(Camera.main.ScreenToViewportPoint(Input.mousePosition));
     }
-    
+
     void FixedUpdate()
     {
+        mousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
         if (!shootingManager.Zooming)
         {
             tmpPos = Vector3.Lerp(transform.position, player.transform.position, .125f);
@@ -32,7 +37,9 @@ public class CameraController : MonoBehaviour
         else
         {
             tmpPos = Vector3.Lerp(transform.position, player.transform.position, .125f);
-            transform.position = new Vector3(tmpPos.x + Camera.main.ScreenToViewportPoint(Input.mousePosition).x * .5f, tmpPos.y + Camera.main.ScreenToViewportPoint(Input.mousePosition).y * .25f, -10);
+
+            transform.position = new Vector3(tmpPos.x + mousePosition.x * .5f, tmpPos.y + mousePosition.y * .5f, -10);
+
         }
     }
 }
