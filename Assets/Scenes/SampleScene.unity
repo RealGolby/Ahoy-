@@ -488,7 +488,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -512,7 +512,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 142870100}
-  TargetZoom: 5
+  TargetZoom: 4
 --- !u!1 &536732477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3193,7 +3193,7 @@ PrefabInstance:
       objectReference: {fileID: 1064399719}
     - target: {fileID: 8434569839296325314, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: Zoom
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8434569839296325314, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: cameraController

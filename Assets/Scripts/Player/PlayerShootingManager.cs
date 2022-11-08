@@ -15,7 +15,7 @@ public class PlayerShootingManager : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            cameraController.TargetZoom = 5;
+            cameraController.TargetZoom = 4;
             Zooming = false;
         }
     }

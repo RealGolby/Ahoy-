@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 
     Vector3 tmpPos;
 
-    public float TargetZoom = 5;
+    public float TargetZoom = 4;
 
     Camera camera;
 
@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
         else
         {
             tmpPos = Vector3.Lerp(transform.position, player.transform.position, .125f);
-            transform.position = new Vector3(tmpPos.x + Camera.main.ScreenToViewportPoint(Input.mousePosition).x / 2, tmpPos.y + Camera.main.ScreenToViewportPoint(Input.mousePosition).y / 2, -10);
+            transform.position = new Vector3(tmpPos.x + Camera.main.ScreenToViewportPoint(Input.mousePosition).x * .5f, tmpPos.y + Camera.main.ScreenToViewportPoint(Input.mousePosition).y * .25f, -10);
         }
     }
 }
