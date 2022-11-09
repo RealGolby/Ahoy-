@@ -1672,6 +1672,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064399717}
   m_CullTransparentMesh: 1
+--- !u!1 &1247970771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1247970773}
+  - component: {fileID: 1247970772}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1247970772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247970771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75439007473ab51419eddb4b39915bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items:
+  - {fileID: 11400000, guid: 26f1604295acac34796ff44ed1932244, type: 2}
+--- !u!4 &1247970773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247970771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1255937455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,6 +1815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23fcfbd8728fba48b1168cd5bd6e47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1 &1260744135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,42 +3283,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: staminaRecoveryTimer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492408654224065815, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: doubleJumpStaminaCost
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: Stamina
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: MaxHealth
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: HealthText
       value: 
       objectReference: {fileID: 272474996}
     - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: MaxStamina
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6767227785784634530, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: StaminaText
       value: 
       objectReference: {fileID: 1742469604}
-    - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: Equppied
-      value: 
-      objectReference: {fileID: 11400000, guid: 26f1604295acac34796ff44ed1932244, type: 2}
-    - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: items.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6981072702508036761, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: HotbarItemsImages.Array.data[0]
       value: 
@@ -3292,10 +3311,6 @@ PrefabInstance:
       propertyPath: HotbarItemsImages.Array.data[4]
       value: 
       objectReference: {fileID: 1064399719}
-    - target: {fileID: 8434569839296325314, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
-      propertyPath: Zoom
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8434569839296325314, guid: 1266d7afd1aafaa42b9ec2b041d7851a, type: 3}
       propertyPath: cameraController
       value: 

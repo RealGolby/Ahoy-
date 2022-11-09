@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInstance : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
-    [SerializeField] Item item;
+    public List<Item> Items;
 }

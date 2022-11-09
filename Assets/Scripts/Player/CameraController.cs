@@ -22,7 +22,6 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, TargetZoom, 5 * Time.deltaTime);
-        Debug.Log(Camera.main.ScreenToViewportPoint(Input.mousePosition));
     }
 
     void FixedUpdate()
@@ -39,7 +38,6 @@ public class CameraController : MonoBehaviour
             tmpPos = Vector3.Lerp(transform.position, player.transform.position, .125f);
 
             transform.position = new Vector3(tmpPos.x + mousePosition.x * .5f, tmpPos.y + mousePosition.y * .5f, -10);
-
         }
     }
 }

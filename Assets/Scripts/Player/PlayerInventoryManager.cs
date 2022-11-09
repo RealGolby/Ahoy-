@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerInventoryManager : MonoBehaviour
 {
-    [SerializeField] List<Item> items;
+    [SerializeField] List<Item> hotbarItems;
 
     [SerializeField] Item equppiedItem;
     [SerializeField] Item lastEquppiedItem;
@@ -18,7 +18,7 @@ public class PlayerInventoryManager : MonoBehaviour
 
     private void Start()
     {
-        items[0] = equppiedItem;
+
     }
 
     private void Update()
@@ -28,11 +28,11 @@ public class PlayerInventoryManager : MonoBehaviour
 
     void getInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && items[0] != null) switchItem(items[0]);
-        if (Input.GetKeyDown(KeyCode.Alpha2) && items[1] != null) switchItem(items[1]);
-        if (Input.GetKeyDown(KeyCode.Alpha3) && items[2] != null) switchItem(items[2]);
-        if (Input.GetKeyDown(KeyCode.Alpha4) && items[3] != null) switchItem(items[3]);
-        if (Input.GetKeyDown(KeyCode.Alpha5) && items[4] != null) switchItem(items[4]);
+        if (Input.GetKeyDown(KeyCode.Alpha1) && hotbarItems[0] != null) switchItem(hotbarItems[0]);
+        if (Input.GetKeyDown(KeyCode.Alpha2) && hotbarItems[1] != null) switchItem(hotbarItems[1]);
+        if (Input.GetKeyDown(KeyCode.Alpha3) && hotbarItems[2] != null) switchItem(hotbarItems[2]);
+        if (Input.GetKeyDown(KeyCode.Alpha4) && hotbarItems[3] != null) switchItem(hotbarItems[3]);
+        if (Input.GetKeyDown(KeyCode.Alpha5) && hotbarItems[4] != null) switchItem(hotbarItems[4]);
     }
 
     void switchItem(Item item)
